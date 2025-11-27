@@ -6,6 +6,12 @@ import { ConfigModule } from '@nestjs/config';
 import { PaymentTransaction } from './modules/google-pay/entities/payment-transaction.entity';
 import { GooglePayModule } from './modules/google-pay/google-pay.module';
 import { PdfModule } from './modules/pdf/pdf.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { Organization } from './modules/auth/entities/organizations.entity';
+import { Policy } from './modules/auth/entities/policy.entity';
+import { Role } from './modules/auth/entities/role.entity';
+import { User } from './modules/auth/entities/users.entity';
+import { UserRoleMap } from './modules/auth/entities/user-role-map.entity';
 
 @Module({
   imports: [
@@ -17,7 +23,14 @@ import { PdfModule } from './modules/pdf/pdf.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [PaymentTransaction],
+      entities: [
+        PaymentTransaction,
+        Organization,
+        Policy,
+        Role,
+        User,
+        UserRoleMap,
+      ],
       synchronize: false,
       options: {
         encrypt: false,
@@ -26,8 +39,9 @@ import { PdfModule } from './modules/pdf/pdf.module';
     }),
     GooglePayModule,
     PdfModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
